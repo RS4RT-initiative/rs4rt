@@ -1,9 +1,13 @@
 import CategoryCard from "@/components/CategoryCard";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { Database, Package, FileText, Brain, GraduationCap, Code } from "lucide-react";
+import { Database, Package, FileText, GraduationCap, Code, Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { useState } from "react";
 
 const Index = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+
   const categories = [
     {
       title: "Open-Source Software",
@@ -16,13 +20,13 @@ const Index = () => {
       ],
     },
     {
-      title: "Vendors & Commercial Products",
+      title: "Commercial ecosystem and vendor initiatives",
       description: "Industry solutions and commercial offerings",
       icon: Package,
       items: [
-        { name: "Varian Medical Systems", url: "https://www.varian.com/" },
-        { name: "ProKnow Systems", url: "https://proknowsystems.com/" },
-        { name: "Other Commercial Solutions", description: "Explore more vendors" },
+        { name: "Software community platforms and support", description: "Vendors Githubs and others" },
+        { name: "LLM coding assistants" },
+        { name: "AI products registry" },
       ],
     },
     {
@@ -37,23 +41,13 @@ const Index = () => {
       ],
     },
     {
-      title: "Clinical Guidelines",
-      description: "Evidence-based protocols and standards",
+      title: "Standards and consensus initiatives",
+      description: "Consensus guidelines and ontologies",
       icon: FileText,
       items: [
         { name: "ESTRO Contour", url: "https://econtour.org/", description: "Delineation guidelines" },
         { name: "Treatment Protocols", description: "Standard care protocols" },
         { name: "Quality Assurance", description: "QA guidelines and tools" },
-      ],
-    },
-    {
-      title: "Artificial Intelligence",
-      description: "AI models and platforms for radiation therapy",
-      icon: Brain,
-      items: [
-        { name: "DLinRT", description: "Deep Learning in Radiation Therapy" },
-        { name: "Grand Challenge", url: "https://grand-challenge.org/", description: "AI challenges and datasets" },
-        { name: "AI Models Registry", description: "Pre-trained models" },
       ],
     },
     {
@@ -63,10 +57,18 @@ const Index = () => {
       items: [
         { name: "Video Tutorials", description: "YouTube channels and courses" },
         { name: "Workshops & Conferences", description: "Training events" },
-        { name: "DICOM Documentation", url: "https://dicom.innolitics.com/ciods", description: "Technical references" },
+        { name: "Challenges and competitions", description: "Test your skills" },
       ],
     },
   ];
+
+  const filteredCategories = categories.map(category => ({
+    ...category,
+    items: category.items.filter(item =>
+      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.description?.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  })).filter(category => category.items.length > 0);
 
   return (
     <div className="min-h-screen bg-background">
@@ -86,18 +88,16 @@ const Index = () => {
               A comprehensive collection of open-source software, data, guidelines, and educational resources 
               for the radiation therapy community
             </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <div className="rounded-lg bg-card px-6 py-3 shadow-[var(--shadow-card)]">
-                <div className="text-2xl font-bold text-primary">6</div>
-                <div className="text-sm text-muted-foreground">Categories</div>
-              </div>
-              <div className="rounded-lg bg-card px-6 py-3 shadow-[var(--shadow-card)]">
-                <div className="text-2xl font-bold text-primary">20+</div>
-                <div className="text-sm text-muted-foreground">Resources</div>
-              </div>
-              <div className="rounded-lg bg-card px-6 py-3 shadow-[var(--shadow-card)]">
-                <div className="text-2xl font-bold text-primary">Open</div>
-                <div className="text-sm text-muted-foreground">Access</div>
+            <div className="mx-auto max-w-xl">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
+                <Input
+                  type="text"
+                  placeholder="Search resources..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10 h-12 text-base"
+                />
               </div>
             </div>
           </div>
@@ -115,10 +115,15 @@ const Index = () => {
           </div>
           
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {categories.map((category, index) => (
+            {(searchQuery ? filteredCategories : categories).map((category, index) => (
               <CategoryCard key={index} {...category} />
             ))}
           </div>
+          {searchQuery && filteredCategories.length === 0 && (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground">No resources found matching your search.</p>
+            </div>
+          )}
         </div>
       </section>
 
