@@ -24,14 +24,11 @@ const Index = () => {
       description: "Industry solutions and commercial offerings",
       icon: Package,
       items: [
-        { name: "Varian ESAPI Projects", url: "https://medicalaffairs.varian.com/esapi-projects", description: "Software community platforms" },
-        { name: "RaySearch Labs", url: "https://github.com/raysearchlabs", description: "GitHub repository" },
-        { name: "MIM Software", url: "http://github.com/MIMSoftware/", description: "GitHub repository" },
-        { name: "ImFusion GmbH", description: "Medical imaging software" },
-        { name: "Ray GPT", url: "https://chatgpt.com/g/g-6879ef75d66081918ca416efc3dd9a45-ray-gpt", description: "LLM coding assistant" },
-        { name: "ESAPI GPT", url: "https://chatgpt.com/g/g-686281cffe4c81919a158bcc26f032d2-esapi-gpt", description: "LLM coding assistant" },
+        { name: "Software community platforms and support", description: "Vendors Githubs and others" },
+        { name: "LLM coding assistants", description: "AI-powered development tools" },
         { name: "AI products registry", description: "Commercial AI solutions" },
       ],
+      detailsPath: "/commercial",
     },
     {
       title: "Data Resources",
@@ -127,6 +124,26 @@ const Index = () => {
               <p className="text-muted-foreground">No resources found matching your search.</p>
             </div>
           )}
+        </div>
+      </section>
+
+      {/* News & Highlights Section */}
+      <section className="py-16 bg-secondary/20">
+        <div className="container mx-auto px-4">
+          <div className="mb-8 text-center">
+            <h2 className="mb-4 text-3xl font-bold text-foreground">News & Highlights</h2>
+            <p className="text-muted-foreground">
+              Latest updates and announcements from the RS4RT community
+            </p>
+          </div>
+          
+          <div className="mx-auto max-w-4xl">
+            <div className="rounded-lg border bg-card p-6 shadow-[var(--shadow-card)]">
+              <p className="text-center text-muted-foreground">
+                Coming soon - Stay tuned for the latest news and highlights from the radiation therapy community
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
