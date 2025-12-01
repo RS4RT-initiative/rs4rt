@@ -1,7 +1,7 @@
 import CategoryCard from "@/components/CategoryCard";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { Database, Package, FileText, GraduationCap, Code, Search } from "lucide-react";
+import { Database, Package, GraduationCap, Code, Search, Sparkles } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 
@@ -24,9 +24,13 @@ const Index = () => {
       description: "Industry solutions and commercial offerings",
       icon: Package,
       items: [
-        { name: "Software community platforms and support", description: "Vendors Githubs and others" },
-        { name: "LLM coding assistants" },
-        { name: "AI products registry" },
+        { name: "Varian ESAPI Projects", url: "https://medicalaffairs.varian.com/esapi-projects", description: "Software community platforms" },
+        { name: "RaySearch Labs", url: "https://github.com/raysearchlabs", description: "GitHub repository" },
+        { name: "MIM Software", url: "http://github.com/MIMSoftware/", description: "GitHub repository" },
+        { name: "ImFusion GmbH", description: "Medical imaging software" },
+        { name: "Ray GPT", url: "https://chatgpt.com/g/g-6879ef75d66081918ca416efc3dd9a45-ray-gpt", description: "LLM coding assistant" },
+        { name: "ESAPI GPT", url: "https://chatgpt.com/g/g-686281cffe4c81919a158bcc26f032d2-esapi-gpt", description: "LLM coding assistant" },
+        { name: "AI products registry", description: "Commercial AI solutions" },
       ],
     },
     {
@@ -41,13 +45,12 @@ const Index = () => {
       ],
     },
     {
-      title: "Standards and consensus initiatives",
-      description: "Consensus guidelines and ontologies",
-      icon: FileText,
+      title: "Artificial Intelligence",
+      description: "AI tools and registries for radiation therapy",
+      icon: Sparkles,
       items: [
-        { name: "ESTRO Contour", url: "https://econtour.org/", description: "Delineation guidelines" },
-        { name: "Treatment Protocols", description: "Standard care protocols" },
-        { name: "Quality Assurance", description: "QA guidelines and tools" },
+        { name: "DLinRT", url: "http://DLinRT.eu", description: "Deep Learning in Radiotherapy" },
+        { name: "Health AI Register", url: "https://healthairegister.com/radiology/products", description: "Radiology AI products" },
       ],
     },
     {
@@ -57,7 +60,7 @@ const Index = () => {
       items: [
         { name: "Video Tutorials", description: "YouTube channels and courses" },
         { name: "Workshops & Conferences", description: "Training events" },
-        { name: "Challenges and competitions", description: "Test your skills" },
+        { name: "Challenges and competitions", url: "https://grand-challenge.org/", description: "Test your skills" },
       ],
     },
   ];
@@ -79,9 +82,9 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl text-center">
             <h1 className="mb-6 text-5xl font-bold leading-tight text-foreground md:text-6xl">
-              Radiation Therapy
+              RS4RT
               <span className="block bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                Resource Hub
+                Resource-Sharing for Radiotherapy
               </span>
             </h1>
             <p className="mb-8 text-lg text-muted-foreground md:text-xl">

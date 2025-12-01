@@ -12,7 +12,7 @@ const Navigation = () => {
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-accent">
             <Radiation className="h-6 w-6 text-primary-foreground" />
           </div>
-          <span className="text-xl font-bold text-foreground">RadTherapy Resources</span>
+          <span className="text-xl font-bold text-foreground">RS4RT</span>
         </Link>
         
         <div className="flex items-center gap-4">
