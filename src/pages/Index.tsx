@@ -114,7 +114,7 @@ const Index = () => {
           <div className="mx-auto max-w-3xl text-center">
             <h1 className="mb-6 text-5xl font-bold leading-tight text-foreground md:text-6xl">
               RS4RT
-              <span className="block bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              <span className="block bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent pb-2">
                 Resource-Sharing for Radiotherapy
               </span>
             </h1>
