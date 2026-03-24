@@ -13,6 +13,7 @@ interface CategoryCardProps {
     description?: string;
   }>;
   detailsPath?: string;
+  detailItems?: Array<{ name: string; description?: string }>;
 }
 
 const CategoryCard = ({ title, description, icon: Icon, items, detailsPath }: CategoryCardProps) => {
