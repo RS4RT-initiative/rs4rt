@@ -15,6 +15,16 @@ const commercialDetailItems = [
   { name: "ESAPI GPT", description: "LLM coding assistant" },
 ];
 
+// Detail items for Data Resources page (used for cross-page search)
+const dataDetailItems = [
+  { name: "TCIA", description: "Cancer Imaging Archive" },
+  { name: "EUCAIM", description: "European Cancer Image Platform" },
+  { name: "Medical Decathlon", description: "Benchmark datasets" },
+  { name: "Zenodo", description: "Open research data repository" },
+  { name: "AIDA Data Hub", description: "AIDA datasets" },
+  { name: "Grand Challenge - Radiotherapy", description: "Radiotherapy challenges" },
+];
+
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
