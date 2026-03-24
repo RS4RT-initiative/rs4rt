@@ -55,13 +55,11 @@ const Index = () => {
       description: "Public datasets for research and development",
       icon: Database,
       items: [
-        { name: "TCIA", url: "https://www.cancerimagingarchive.net/", description: "Cancer Imaging Archive" },
-        { name: "EUCAIM", url: "https://cancerimage.eu/", description: "European Cancer Image Platform" },
-        { name: "Medical Decathlon", url: "http://medicaldecathlon.com/", description: "Benchmark datasets" },
-        { name: "Zenodo", url: "https://zenodo.org/", description: "Open research data repository" },
-        { name: "AIDA Data Hub", url: "https://datahub.aida.scilifelab.se/10.23698/aida/lund-probe", description: "AIDA datasets" },
-        { name: "Challenges and competitions", url: "https://grand-challenge.org/challenges/?search=Radiotherapy&status=&submit=Apply+Filters", description: "Radiotherapy challenges" },
+        { name: "Databases", description: "TCIA, EUCAIM, Medical Decathlon, Zenodo, and more" },
+        { name: "Challenges and competitions", description: "Radiotherapy challenges and benchmarks" },
       ],
+      detailsPath: "/data-resources",
+      detailItems: dataDetailItems,
     },
     {
       title: "Artificial Intelligence",
