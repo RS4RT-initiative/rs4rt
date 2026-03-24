@@ -12,7 +12,7 @@ const CommercialEcosystem = () => {
         { name: "Varian ESAPI Projects", url: "https://medicalaffairs.varian.com/esapi-projects", description: "Software community platforms" },
         { name: "RaySearch Labs", url: "https://github.com/raysearchlabs", description: "GitHub repository" },
         { name: "MIM Software", url: "http://github.com/MIMSoftware/", description: "GitHub repository" },
-        { name: "ImFusion GmbH", description: "Medical imaging software" },
+        { name: "ImFusion GmbH", url: "https://github.com/ImFusionGmbH", description: "Medical imaging software" },
       ]
     },
     {

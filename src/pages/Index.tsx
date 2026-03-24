@@ -87,13 +87,22 @@ const Index = () => {
     },
   ];
 
-  const filteredCategories = categories.map(category => ({
-    ...category,
-    items: category.items.filter(item =>
-      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.description?.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-  })).filter(category => category.items.length > 0);
+  const query = searchQuery.toLowerCase();
+  const filteredCategories = categories.map(category => {
+    const matchingItems = category.items.filter(item =>
+      item.name.toLowerCase().includes(query) ||
+      item.description?.toLowerCase().includes(query)
+    );
+    const detailMatch = category.detailItems?.some(item =>
+      item.name.toLowerCase().includes(query) ||
+      item.description?.toLowerCase().includes(query)
+    );
+    // Show category if main items match OR detail page items match
+    if (matchingItems.length > 0 || detailMatch) {
+      return { ...category, items: matchingItems.length > 0 ? matchingItems : category.items };
+    }
+    return null;
+  }).filter(Boolean) as typeof categories;
 
   return (
     <div className="min-h-screen bg-background">
