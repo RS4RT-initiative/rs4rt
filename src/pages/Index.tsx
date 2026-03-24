@@ -1,9 +1,19 @@
 import CategoryCard from "@/components/CategoryCard";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { Database, Package, GraduationCap, Code, Search, Sparkles } from "lucide-react";
+import { Database, Package, GraduationCap, Code, Search, Sparkles, BookOpen } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+
+// Detail items for Commercial page (used for cross-page search)
+const commercialDetailItems = [
+  { name: "Varian ESAPI Projects", description: "Software community platforms" },
+  { name: "RaySearch Labs", description: "GitHub repository" },
+  { name: "MIM Software", description: "GitHub repository" },
+  { name: "ImFusion GmbH", description: "Medical imaging software" },
+  { name: "Ray GPT", description: "LLM coding assistant" },
+  { name: "ESAPI GPT", description: "LLM coding assistant" },
+];
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -26,9 +36,9 @@ const Index = () => {
       items: [
         { name: "Software community platforms and support", description: "Vendors Githubs and others" },
         { name: "LLM coding assistants", description: "AI-powered development tools" },
-        { name: "AI products registry", description: "Commercial AI solutions" },
       ],
       detailsPath: "/commercial",
+      detailItems: commercialDetailItems,
     },
     {
       title: "Data Resources",
@@ -37,8 +47,10 @@ const Index = () => {
       items: [
         { name: "TCIA", url: "https://www.cancerimagingarchive.net/", description: "Cancer Imaging Archive" },
         { name: "EUCAIM", url: "https://cancerimage.eu/", description: "European Cancer Image Platform" },
-        { name: "Medical Decathlon", description: "Benchmark datasets" },
-        { name: "CancerData.org", url: "https://cancerdata.org/" },
+        { name: "Medical Decathlon", url: "http://medicaldecathlon.com/", description: "Benchmark datasets" },
+        { name: "Zenodo", url: "https://zenodo.org/", description: "Open research data repository" },
+        { name: "AIDA Data Hub", url: "https://datahub.aida.scilifelab.se/10.23698/aida/lund-probe", description: "AIDA datasets" },
+        { name: "Challenges and competitions", url: "https://grand-challenge.org/challenges/?search=Radiotherapy&status=&submit=Apply+Filters", description: "Radiotherapy challenges" },
       ],
     },
     {
@@ -48,6 +60,7 @@ const Index = () => {
       items: [
         { name: "DLinRT", url: "http://DLinRT.eu", description: "Deep Learning in Radiotherapy" },
         { name: "Health AI Register", url: "https://healthairegister.com/radiology/products", description: "Radiology AI products" },
+        { name: "AI Model Card", url: "https://rt-modelcard.streamlit.app/", description: "RT model card tool" },
       ],
     },
     {
@@ -55,20 +68,41 @@ const Index = () => {
       description: "Learning resources and training materials",
       icon: GraduationCap,
       items: [
-        { name: "Video Tutorials", description: "YouTube channels and courses" },
-        { name: "Workshops & Conferences", description: "Training events" },
-        { name: "Challenges and competitions", url: "https://grand-challenge.org/", description: "Test your skills" },
+        { name: "AAPM Education", url: "https://www.aapm.org/education/", description: "AAPM educational resources" },
+        { name: "ESTRO Courses", url: "https://www.estro.org/courses", description: "ESTRO training courses" },
+        { name: "e-LEMENT", url: "https://e-lement.efomp.org/", description: "EFOMP e-learning platform" },
+        { name: "RSNA AI Deep Learning Lab", url: "https://github.com/RSNA/AI-Deep-Learning-Lab-2025", description: "Notebooks provided by RSNA" },
+      ],
+    },
+    {
+      title: "Standards, guidelines and consensus initiatives",
+      description: "Consensus guidelines and ontologies",
+      icon: BookOpen,
+      items: [
+        { name: "eContour", url: "https://econtour.org/", description: "Contouring guidelines" },
+        { name: "RCR Auto-Contouring Guidance", url: "https://www.rcr.ac.uk/media/rqjlnlny/rcr-auto-contouring-in-radiotherapy-2024.pdf", description: "RCR 2024 guidance" },
+        { name: "CancerData.org", url: "https://cancerdata.org/", description: "Cancer data sharing" },
+        { name: "DICOM Reference", url: "https://dicom.innolitics.com/ciods", description: "DICOM documentation" },
       ],
     },
   ];
 
-  const filteredCategories = categories.map(category => ({
-    ...category,
-    items: category.items.filter(item =>
-      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.description?.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-  })).filter(category => category.items.length > 0);
+  const query = searchQuery.toLowerCase();
+  const filteredCategories = categories.map(category => {
+    const matchingItems = category.items.filter(item =>
+      item.name.toLowerCase().includes(query) ||
+      item.description?.toLowerCase().includes(query)
+    );
+    const detailMatch = category.detailItems?.some(item =>
+      item.name.toLowerCase().includes(query) ||
+      item.description?.toLowerCase().includes(query)
+    );
+    // Show category if main items match OR detail page items match
+    if (matchingItems.length > 0 || detailMatch) {
+      return { ...category, items: matchingItems.length > 0 ? matchingItems : category.items };
+    }
+    return null;
+  }).filter(Boolean) as typeof categories;
 
   return (
     <div className="min-h-screen bg-background">

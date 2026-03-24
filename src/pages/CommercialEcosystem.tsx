@@ -12,7 +12,7 @@ const CommercialEcosystem = () => {
         { name: "Varian ESAPI Projects", url: "https://medicalaffairs.varian.com/esapi-projects", description: "Software community platforms" },
         { name: "RaySearch Labs", url: "https://github.com/raysearchlabs", description: "GitHub repository" },
         { name: "MIM Software", url: "http://github.com/MIMSoftware/", description: "GitHub repository" },
-        { name: "ImFusion GmbH", description: "Medical imaging software" },
+        { name: "ImFusion GmbH", url: "https://github.com/ImFusionGmbH", description: "Medical imaging software" },
       ]
     },
     {
@@ -23,13 +23,6 @@ const CommercialEcosystem = () => {
         { name: "ESAPI GPT", url: "https://chatgpt.com/g/g-686281cffe4c81919a158bcc26f032d2-esapi-gpt", description: "LLM coding assistant" },
       ]
     },
-    {
-      category: "AI products registry",
-      description: "Commercial AI solutions",
-      items: [
-        { name: "AI products registry", description: "Commercial AI solutions" },
-      ]
-    }
   ];
 
   return (
