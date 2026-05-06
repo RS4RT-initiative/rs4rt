@@ -19,11 +19,18 @@ const commercialDetailItems = [
 const dataDetailItems = [
   { name: "TCIA", description: "Cancer Imaging Archive" },
   { name: "EUCAIM", description: "European Cancer Image Platform" },
+  { name: "EUCanImage", description: "Cancer imaging platform" },
+  { name: "Medical Dataset Browser", description: "Searchable medical dataset index" },
   { name: "Medical Decathlon", description: "Benchmark datasets" },
   { name: "Zenodo", description: "Open research data repository" },
   { name: "AIDA Data Hub", description: "AIDA datasets" },
   { name: "Grand Challenge - Radiotherapy", description: "Radiotherapy challenges" },
+  { name: "Maastricht University - Data practices", description: "Data sharing best practices" },
+  { name: "NIH DMS Plan", description: "Writing a Data Management & Sharing plan" },
 ];
+
+const SUBMIT_RESOURCE_URL = "https://docs.google.com/forms/d/e/1FAIpQLSfPlaceholderSubmitResource/viewform";
+const SUBMIT_OSS_URL = "https://docs.google.com/forms/d/e/1FAIpQLSfPlaceholderSubmitOSS/viewform";
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -34,10 +41,10 @@ const Index = () => {
       description: "Community-driven software solutions for radiation therapy",
       icon: Code,
       items: [
-        { name: "Registry", description: "Browse open-source projects" },
-        { name: "Submit Your Project", description: "Share your contribution (Google Form)" },
-        { name: "Best Practices", url: "https://opensource.guide/", description: "Learn how to contribute effectively" },
+        { name: "Registry", url: "https://research-software.dev/communities/rs4rt/software", description: "Browse open-source projects" },
+        { name: "Best Practices", url: "/best-practices", description: "Guides, IPEM and Goldacre report" },
       ],
+      cta: { label: "Add an Open-Source Software", url: SUBMIT_OSS_URL },
     },
     {
       title: "Commercial ecosystem and vendor initiatives",
@@ -57,6 +64,7 @@ const Index = () => {
       items: [
         { name: "Databases", description: "TCIA, EUCAIM, Medical Decathlon, Zenodo, and more" },
         { name: "Challenges and competitions", description: "Radiotherapy challenges and benchmarks" },
+        { name: "Data sharing best practices", description: "Maastricht and NIH DMS guidance" },
       ],
       detailsPath: "/data-resources",
       detailItems: dataDetailItems,
