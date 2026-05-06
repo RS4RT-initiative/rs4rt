@@ -128,14 +128,13 @@ const Index = () => {
       <section className="relative overflow-hidden bg-gradient-to-br from-primary/10 via-accent/5 to-background py-20">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl text-center">
-            <h1 className="mb-6 text-5xl font-bold leading-tight text-foreground md:text-6xl">
-              RS4RT
-              <span className="block bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent pb-2">
-                Resource-Sharing for Radiotherapy
-              </span>
-            </h1>
+            <img
+              src={rs4rtLogo}
+              alt="RS4RT - Resource Sharing for Radiotherapy"
+              className="mx-auto mb-6 h-32 w-auto md:h-40"
+            />
             <p className="mb-8 text-lg text-muted-foreground md:text-xl">
-              A comprehensive collection of open-source software, data, guidelines, and educational resources 
+              A comprehensive collection of open-source software, data, guidelines, and educational resources
               for the radiation therapy community
             </p>
             <div className="mx-auto max-w-xl">
@@ -148,6 +147,29 @@ const Index = () => {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="pl-10 h-12 text-base"
                 />
+              </div>
+              <div className="mt-6 flex flex-wrap justify-center gap-3">
+                <Button
+                  asChild
+                  size="lg"
+                  className="gap-2 bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90 shadow-[var(--shadow-hover)]"
+                >
+                  <a href={SUBMIT_RESOURCE_URL} target="_blank" rel="noopener noreferrer">
+                    <Send className="h-5 w-5" />
+                    Submit a Resource
+                  </a>
+                </Button>
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="gap-2 border-primary/40 hover:bg-primary/10"
+                >
+                  <a href={SUBMIT_OSS_URL} target="_blank" rel="noopener noreferrer">
+                    <Code className="h-5 w-5" />
+                    Add an Open-Source Software
+                  </a>
+                </Button>
               </div>
             </div>
           </div>
