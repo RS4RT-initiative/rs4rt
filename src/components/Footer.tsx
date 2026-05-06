@@ -1,42 +1,52 @@
-import { Mail, Radiation, Send } from "lucide-react";
+import { Mail, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import logo from "@/assets/rs4rt-logo.svg";
+
+const SUBMIT_URL = "https://docs.google.com/forms/d/e/1FAIpQLSfPlaceholderSubmitResource/viewform";
 
 const Footer = () => {
   return (
     <footer className="mt-20 border-t border-border bg-secondary/30">
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
-          <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-accent">
-              <Radiation className="h-5 w-5 text-primary-foreground" />
+      {/* Submit a Resource highlight band */}
+      <div className="border-b border-border bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10">
+        <div className="container mx-auto px-4 py-10">
+          <div className="flex flex-col items-center justify-between gap-4 text-center md:flex-row md:text-left">
+            <div>
+              <h3 className="text-xl font-bold text-foreground md:text-2xl">
+                Are we missing something?
+              </h3>
+              <p className="text-sm text-muted-foreground md:text-base">
+                Suggest an initiative, dataset, or resource — help grow RS4RT.
+              </p>
             </div>
-            <span className="text-sm font-semibold text-foreground">RS4RT</span>
-          </div>
-          
-          <div className="flex flex-col items-center gap-3 sm:flex-row sm:gap-6">
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Mail className="h-4 w-4" />
-              <a 
-                href="mailto:contact@radtherapy.org" 
-                className="transition-colors hover:text-primary"
-              >
-                contact@radtherapy.org
-              </a>
-            </div>
-            
-            <Button 
-              variant="outline" 
-              size="sm"
-              className="gap-2"
+            <Button
+              size="lg"
               asChild
+              className="gap-2 bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90 shadow-[var(--shadow-hover)]"
             >
-              <a href="#" target="_blank" rel="noopener noreferrer">
-                <Send className="h-4 w-4" />
+              <a href={SUBMIT_URL} target="_blank" rel="noopener noreferrer">
+                <Send className="h-5 w-5" />
                 Submit a Resource
               </a>
             </Button>
           </div>
-          
+        </div>
+      </div>
+
+      <div className="container mx-auto px-4 py-8">
+        <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
+          <img src={logo} alt="RS4RT" className="h-8 w-auto" />
+
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Mail className="h-4 w-4" />
+            <a
+              href="mailto:contact@radtherapy.org"
+              className="transition-colors hover:text-primary"
+            >
+              contact@radtherapy.org
+            </a>
+          </div>
+
           <p className="text-sm text-muted-foreground">
             © 2025 RS4RT. All rights reserved.
           </p>
