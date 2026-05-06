@@ -35,21 +35,37 @@ const CategoryCard = ({ title, description, icon: Icon, items, detailsPath, cta 
           {items.map((item, index) => (
             <li key={index} className="group/item">
               {item.url && !detailsPath ? (
-                <a
-                  href={item.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-start gap-2 text-sm transition-colors hover:text-primary"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary/60 group-hover/item:bg-primary" />
-                  <div>
-                    <div className="font-medium">{item.name}</div>
-                    {item.description && (
-                      <div className="text-xs text-muted-foreground">{item.description}</div>
-                    )}
-                  </div>
-                </a>
+                item.url.startsWith("/") ? (
+                  <Link
+                    to={item.url}
+                    className="flex items-start gap-2 text-sm transition-colors hover:text-primary"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary/60 group-hover/item:bg-primary" />
+                    <div>
+                      <div className="font-medium">{item.name}</div>
+                      {item.description && (
+                        <div className="text-xs text-muted-foreground">{item.description}</div>
+                      )}
+                    </div>
+                  </Link>
+                ) : (
+                  <a
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-start gap-2 text-sm transition-colors hover:text-primary"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary/60 group-hover/item:bg-primary" />
+                    <div>
+                      <div className="font-medium">{item.name}</div>
+                      {item.description && (
+                        <div className="text-xs text-muted-foreground">{item.description}</div>
+                      )}
+                    </div>
+                  </a>
+                )
               ) : (
                 <div className="flex items-start gap-2 text-sm">
                   <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary/60" />
