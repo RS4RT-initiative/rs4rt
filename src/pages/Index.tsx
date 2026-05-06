@@ -1,9 +1,11 @@
 import CategoryCard from "@/components/CategoryCard";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { Database, Package, GraduationCap, Code, Search, Sparkles, BookOpen } from "lucide-react";
+import { Database, Package, GraduationCap, Code, Search, Sparkles, BookOpen, Send } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import rs4rtLogo from "@/assets/rs4rt-logo.svg";
 
 // Detail items for Commercial page (used for cross-page search)
 const commercialDetailItems = [
