@@ -1,7 +1,7 @@
-import { LucideIcon } from "lucide-react";
+import { LucideIcon, ArrowRight, Send } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface CategoryCardProps {
   title: string;
@@ -14,9 +14,13 @@ interface CategoryCardProps {
   }>;
   detailsPath?: string;
   detailItems?: Array<{ name: string; description?: string }>;
+  cta?: {
+    label: string;
+    url: string;
+  };
 }
 
-const CategoryCard = ({ title, description, icon: Icon, items, detailsPath }: CategoryCardProps) => {
+const CategoryCard = ({ title, description, icon: Icon, items, detailsPath, cta }: CategoryCardProps) => {
   const content = (
     <Card className="group h-full transition-all duration-300 hover:shadow-[var(--shadow-hover)] bg-gradient-to-br from-card to-secondary/30">
       <CardHeader>
@@ -31,21 +35,37 @@ const CategoryCard = ({ title, description, icon: Icon, items, detailsPath }: Ca
           {items.map((item, index) => (
             <li key={index} className="group/item">
               {item.url && !detailsPath ? (
-                <a
-                  href={item.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-start gap-2 text-sm transition-colors hover:text-primary"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary/60 group-hover/item:bg-primary" />
-                  <div>
-                    <div className="font-medium">{item.name}</div>
-                    {item.description && (
-                      <div className="text-xs text-muted-foreground">{item.description}</div>
-                    )}
-                  </div>
-                </a>
+                item.url.startsWith("/") ? (
+                  <Link
+                    to={item.url}
+                    className="flex items-start gap-2 text-sm transition-colors hover:text-primary"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary/60 group-hover/item:bg-primary" />
+                    <div>
+                      <div className="font-medium">{item.name}</div>
+                      {item.description && (
+                        <div className="text-xs text-muted-foreground">{item.description}</div>
+                      )}
+                    </div>
+                  </Link>
+                ) : (
+                  <a
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-start gap-2 text-sm transition-colors hover:text-primary"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary/60 group-hover/item:bg-primary" />
+                    <div>
+                      <div className="font-medium">{item.name}</div>
+                      {item.description && (
+                        <div className="text-xs text-muted-foreground">{item.description}</div>
+                      )}
+                    </div>
+                  </a>
+                )
               ) : (
                 <div className="flex items-start gap-2 text-sm">
                   <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary/60" />
@@ -60,6 +80,20 @@ const CategoryCard = ({ title, description, icon: Icon, items, detailsPath }: Ca
             </li>
           ))}
         </ul>
+
+        {cta && (
+          <Button
+            asChild
+            className="mt-5 w-full gap-2 bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90 shadow-[var(--shadow-card)]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <a href={cta.url} target="_blank" rel="noopener noreferrer">
+              <Send className="h-4 w-4" />
+              {cta.label}
+            </a>
+          </Button>
+        )}
+
         {detailsPath && (
           <div className="mt-4 flex items-center gap-2 text-sm font-medium text-primary">
             View all resources

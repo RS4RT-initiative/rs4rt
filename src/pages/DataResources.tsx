@@ -11,6 +11,8 @@ const DataResources = () => {
       items: [
         { name: "TCIA", url: "https://www.cancerimagingarchive.net/", description: "Cancer Imaging Archive" },
         { name: "EUCAIM", url: "https://cancerimage.eu/", description: "European Cancer Image Platform" },
+        { name: "EUCanImage", url: "https://platform.eucanimage.eu/explore/", description: "Cancer imaging platform" },
+        { name: "Medical Dataset Browser", url: "https://tchenglv520.github.io/medical-dataset-browser/", description: "Searchable medical dataset index" },
         { name: "Medical Decathlon", url: "http://medicaldecathlon.com/", description: "Benchmark datasets" },
         { name: "Zenodo", url: "https://zenodo.org/", description: "Open research data repository" },
         { name: "AIDA Data Hub", url: "https://datahub.aida.scilifelab.se/10.23698/aida/lund-probe", description: "AIDA datasets" },
@@ -21,6 +23,14 @@ const DataResources = () => {
       description: "Radiotherapy-related challenges and benchmarks",
       items: [
         { name: "Grand Challenge - Radiotherapy", url: "https://grand-challenge.org/challenges/?search=Radiotherapy&status=&submit=Apply+Filters", description: "Radiotherapy challenges" },
+      ],
+    },
+    {
+      category: "Data sharing best practices",
+      description: "Guidance for responsible data sharing and management",
+      items: [
+        { name: "Maastricht University - Data practices and management", url: "https://www.maastrichtuniversity.nl/data-practices-and-data-management-0", description: "Institutional data practices and management" },
+        { name: "NIH - Writing a Data Management & Sharing Plan", url: "https://grants.nih.gov/policy-and-compliance/policy-topics/sharing-policies/dms/writing-dms-plan", description: "NIH guidance on DMS plans" },
       ],
     },
   ];
