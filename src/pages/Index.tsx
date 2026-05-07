@@ -130,11 +130,13 @@ const Index = () => {
       <section className="relative overflow-hidden bg-secondary/40 py-20">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl text-center">
-            <img
-              src={rs4rtLogo}
-              alt="RS4RT - Resource Sharing for Radiotherapy"
-              className="mx-auto mb-6 h-32 w-auto md:h-40"
-            />
+            <div className="relative mx-auto mb-6 h-40 w-[28rem] max-w-full overflow-hidden md:h-52">
+              <img
+                src={rs4rtLogo}
+                alt="RS4RT - Resource Sharing for Radiotherapy"
+                className="absolute left-1/2 top-1/2 h-[180%] w-auto max-w-none -translate-x-1/2 -translate-y-1/2"
+              />
+            </div>
             <p className="mb-8 text-lg text-muted-foreground md:text-xl">
               A comprehensive collection of open-source software, data, guidelines, and educational resources
               for the radiation therapy community
@@ -149,29 +151,6 @@ const Index = () => {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="pl-10 h-12 text-base"
                 />
-              </div>
-              <div className="mt-6 flex flex-wrap justify-center gap-3">
-                <Button
-                  asChild
-                  size="lg"
-                  className="gap-2 bg-primary text-primary-foreground hover:opacity-90 shadow-[var(--shadow-hover)]"
-                >
-                  <a href={SUBMIT_RESOURCE_URL} target="_blank" rel="noopener noreferrer">
-                    <Send className="h-5 w-5" />
-                    Submit a Resource
-                  </a>
-                </Button>
-                <Button
-                  asChild
-                  size="lg"
-                  variant="outline"
-                  className="gap-2 border-primary/40 hover:bg-primary/10"
-                >
-                  <a href={SUBMIT_OSS_URL} target="_blank" rel="noopener noreferrer">
-                    <Code className="h-5 w-5" />
-                    Add an Open-Source Software
-                  </a>
-                </Button>
               </div>
             </div>
           </div>
