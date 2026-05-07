@@ -128,11 +128,13 @@ const Index = () => {
       <section className="relative overflow-hidden bg-secondary/40 pt-12 pb-10">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl text-center">
-            <img
-              src={rs4rtLogo}
-              alt="RS4RT - Resource Sharing for Radiotherapy"
-              className="mx-auto mb-6 block h-48 w-auto md:h-64"
-            />
+            <div className="mx-auto mb-6 h-40 w-auto max-w-full overflow-hidden md:h-56">
+              <img
+                src={rs4rtLogo}
+                alt="RS4RT - Resource Sharing for Radiotherapy"
+                className="mx-auto block h-[160%] w-auto -translate-y-[19%]"
+              />
+            </div>
             <p className="mb-8 text-lg text-muted-foreground md:text-xl">
               A comprehensive collection of open-source software, data, guidelines, and educational resources
               for the radiation therapy community
