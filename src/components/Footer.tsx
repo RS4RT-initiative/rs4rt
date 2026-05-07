@@ -1,49 +1,78 @@
-import { Mail, Send } from "lucide-react";
+import { Mail, Send, Code } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/rs4rt-logo.svg";
 
-const SUBMIT_URL = "https://docs.google.com/forms/d/e/1FAIpQLSfPlaceholderSubmitResource/viewform";
+const SUBMIT_RESOURCE_URL = "https://docs.google.com/forms/d/e/1FAIpQLSfPlaceholderSubmitResource/viewform";
+const SUBMIT_OSS_URL = "https://docs.google.com/forms/d/e/1FAIpQLSfPlaceholderSubmitOSS/viewform";
 
 const Footer = () => {
   return (
-    <footer className="mt-20 border-t border-border bg-secondary/30">
-      {/* Submit a Resource highlight band */}
-      <div className="border-b border-border bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10">
-        <div className="container mx-auto px-4 py-10">
-          <div className="flex flex-col items-center justify-between gap-4 text-center md:flex-row md:text-left">
-            <div>
-              <h3 className="text-xl font-bold text-foreground md:text-2xl">
-                Are we missing something?
-              </h3>
-              <p className="text-sm text-muted-foreground md:text-base">
-                Suggest an initiative, dataset, or resource — help grow RS4RT.
-              </p>
+    <footer className="mt-20 border-t border-border bg-secondary/40">
+      {/* Contribute section */}
+      <div className="border-b border-border bg-primary text-primary-foreground">
+        <div className="container mx-auto px-4 py-12">
+          <div className="mx-auto max-w-4xl text-center">
+            <h3 className="text-2xl font-bold md:text-3xl">
+              Contribute to the platform
+            </h3>
+            <p className="mt-2 text-primary-foreground/80 md:text-lg">
+              Help grow RS4RT — share initiatives or open-source software with the community.
+            </p>
+
+            <div className="mt-8 grid gap-6 md:grid-cols-2">
+              <div className="rounded-lg bg-background/10 p-6 text-left backdrop-blur-sm">
+                <h4 className="flex items-center gap-2 text-lg font-semibold">
+                  <Send className="h-5 w-5" /> Submit a resource
+                </h4>
+                <p className="mt-2 text-sm text-primary-foreground/80">
+                  Suggest an initiative, dataset, or resource for the website.
+                </p>
+                <Button
+                  asChild
+                  size="lg"
+                  variant="secondary"
+                  className="mt-4 w-full font-semibold"
+                >
+                  <a href={SUBMIT_RESOURCE_URL} target="_blank" rel="noopener noreferrer">
+                    Submit a resource
+                  </a>
+                </Button>
+              </div>
+
+              <div className="rounded-lg bg-background/10 p-6 text-left backdrop-blur-sm">
+                <h4 className="flex items-center gap-2 text-lg font-semibold">
+                  <Code className="h-5 w-5" /> Submit an open-source software
+                </h4>
+                <p className="mt-2 text-sm text-primary-foreground/80">
+                  Add a software to the registry.
+                </p>
+                <Button
+                  asChild
+                  size="lg"
+                  variant="secondary"
+                  className="mt-4 w-full font-semibold"
+                >
+                  <a href={SUBMIT_OSS_URL} target="_blank" rel="noopener noreferrer">
+                    Submit a software
+                  </a>
+                </Button>
+              </div>
             </div>
-            <Button
-              size="lg"
-              asChild
-              className="gap-2 bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90 shadow-[var(--shadow-hover)]"
-            >
-              <a href={SUBMIT_URL} target="_blank" rel="noopener noreferrer">
-                <Send className="h-5 w-5" />
-                Submit a Resource
-              </a>
-            </Button>
           </div>
         </div>
       </div>
 
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
-          <img src={logo} alt="RS4RT" className="h-8 w-auto" />
+          <img src={logo} alt="RS4RT" className="h-10 w-auto" />
 
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Mail className="h-4 w-4" />
             <a
-              href="mailto:contact@radtherapy.org"
+              href="mailto:contact@rs4rt.org"
               className="transition-colors hover:text-primary"
             >
-              contact@radtherapy.org
+              contact@rs4rt.org
             </a>
           </div>
 

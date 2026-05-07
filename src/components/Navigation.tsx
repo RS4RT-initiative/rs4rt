@@ -1,18 +1,22 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Send } from "lucide-react";
 import logo from "@/assets/rs4rt-logo.svg";
-
-const SUBMIT_URL = "https://docs.google.com/forms/d/e/1FAIpQLSfPlaceholderSubmitResource/viewform";
 
 const Navigation = () => {
   const location = useLocation();
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <Link to="/" className="flex items-center gap-2">
-          <img src={logo} alt="RS4RT - Resource Sharing for Radiotherapy" className="h-10 w-auto" />
+      <div className="container mx-auto flex h-20 items-center justify-between px-4">
+        <Link to="/" className="flex items-center">
+          {/* Crop the empty top/bottom of the logo by using overflow-hidden on a sized box and scaling the image */}
+          <div className="relative h-16 w-56 overflow-hidden">
+            <img
+              src={logo}
+              alt="RS4RT - Resource Sharing for Radiotherapy"
+              className="absolute left-1/2 top-1/2 h-[180%] w-auto max-w-none -translate-x-1/2 -translate-y-1/2"
+            />
+          </div>
         </Link>
 
         <div className="flex items-center gap-2 sm:gap-4">
@@ -32,16 +36,6 @@ const Navigation = () => {
               About
             </Button>
           </Link>
-          <Button
-            asChild
-            className="font-semibold gap-2 bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90 shadow-[var(--shadow-card)]"
-          >
-            <a href={SUBMIT_URL} target="_blank" rel="noopener noreferrer">
-              <Send className="h-4 w-4" />
-              <span className="hidden sm:inline">Submit a Resource</span>
-              <span className="sm:hidden">Submit</span>
-            </a>
-          </Button>
         </div>
       </div>
     </nav>
