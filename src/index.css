@@ -87,12 +87,12 @@ All colors MUST be HSL.
 
     --border: 272 20% 25%;
     --input: 272 20% 25%;
-    --ring: 32 85% 62%;
+    --ring: 272 50% 60%;
     
-    --gradient-hero: linear-gradient(135deg, hsl(32 85% 62%), hsl(272 60% 55%));
-    --gradient-card: linear-gradient(145deg, hsl(272 28% 16%), hsl(272 25% 20%));
-    --shadow-card: 0 4px 20px hsla(32, 85%, 55%, 0.12);
-    --shadow-hover: 0 8px 30px hsla(272, 60%, 55%, 0.22);
+    --gradient-hero: hsl(272 55% 25%);
+    --gradient-card: hsl(272 28% 16%);
+    --shadow-card: 0 2px 10px hsla(272, 50%, 10%, 0.3);
+    --shadow-hover: 0 6px 20px hsla(272, 50%, 10%, 0.4);
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
