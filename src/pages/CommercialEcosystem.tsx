@@ -33,7 +33,7 @@ const CommercialEcosystem = () => {
         <div className="mx-auto max-w-5xl">
           {/* Header */}
           <div className="mb-12">
-            <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent">
+            <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-xl bg-primary">
               <Package className="h-8 w-8 text-primary-foreground" />
             </div>
             <h1 className="mb-4 text-4xl font-bold text-foreground md:text-5xl">

@@ -24,7 +24,7 @@ const CategoryCard = ({ title, description, icon: Icon, items, detailsPath, cta 
   const content = (
     <Card className="group h-full transition-all duration-300 hover:shadow-[var(--shadow-hover)] bg-gradient-to-br from-card to-secondary/30">
       <CardHeader>
-        <div className="mb-3 inline-flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent">
+        <div className="mb-3 inline-flex h-14 w-14 items-center justify-center rounded-xl bg-primary">
           <Icon className="h-7 w-7 text-primary-foreground" />
         </div>
         <CardTitle className="text-xl font-bold text-foreground">{title}</CardTitle>
@@ -84,7 +84,7 @@ const CategoryCard = ({ title, description, icon: Icon, items, detailsPath, cta 
         {cta && (
           <Button
             asChild
-            className="mt-5 w-full gap-2 bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90 shadow-[var(--shadow-card)]"
+            className="mt-5 w-full gap-2 bg-primary text-primary-foreground hover:opacity-90 shadow-[var(--shadow-card)]"
             onClick={(e) => e.stopPropagation()}
           >
             <a href={cta.url} target="_blank" rel="noopener noreferrer">

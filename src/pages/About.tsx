@@ -33,7 +33,7 @@ const About = () => {
           {/* Origin Story */}
           <Card className="mb-8 shadow-[var(--shadow-card)]">
             <CardHeader>
-              <div className="mb-3 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent">
+              <div className="mb-3 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary">
                 <Target className="h-6 w-6 text-primary-foreground" />
               </div>
               <CardTitle className="text-2xl">Our Initiative</CardTitle>
@@ -60,7 +60,7 @@ const About = () => {
           {/* Values */}
           <Card className="mb-8 shadow-[var(--shadow-card)]">
             <CardHeader>
-              <div className="mb-3 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent">
+              <div className="mb-3 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary">
                 <Heart className="h-6 w-6 text-primary-foreground" />
               </div>
               <CardTitle className="text-2xl">Our Values</CardTitle>
@@ -102,7 +102,7 @@ const About = () => {
           {/* People Involved */}
           <Card className="shadow-[var(--shadow-card)]">
             <CardHeader>
-              <div className="mb-3 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent">
+              <div className="mb-3 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary">
                 <Users className="h-6 w-6 text-primary-foreground" />
               </div>
               <CardTitle className="text-2xl">People Involved in RS4RT</CardTitle>

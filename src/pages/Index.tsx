@@ -154,7 +154,7 @@ const Index = () => {
                 <Button
                   asChild
                   size="lg"
-                  className="gap-2 bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90 shadow-[var(--shadow-hover)]"
+                  className="gap-2 bg-primary text-primary-foreground hover:opacity-90 shadow-[var(--shadow-hover)]"
                 >
                   <a href={SUBMIT_RESOURCE_URL} target="_blank" rel="noopener noreferrer">
                     <Send className="h-5 w-5" />
