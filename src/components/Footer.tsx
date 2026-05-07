@@ -8,7 +8,7 @@ const Footer = () => {
   return (
     <footer className="mt-20 border-t border-border bg-secondary/30">
       {/* Submit a Resource highlight band */}
-      <div className="border-b border-border bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10">
+      <div className="border-b border-border bg-secondary">
         <div className="container mx-auto px-4 py-10">
           <div className="flex flex-col items-center justify-between gap-4 text-center md:flex-row md:text-left">
             <div>

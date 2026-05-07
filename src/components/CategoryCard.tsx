@@ -22,7 +22,7 @@ interface CategoryCardProps {
 
 const CategoryCard = ({ title, description, icon: Icon, items, detailsPath, cta }: CategoryCardProps) => {
   const content = (
-    <Card className="group h-full transition-all duration-300 hover:shadow-[var(--shadow-hover)] bg-gradient-to-br from-card to-secondary/30">
+    <Card className="group h-full transition-all duration-300 hover:shadow-[var(--shadow-hover)] bg-card">
       <CardHeader>
         <div className="mb-3 inline-flex h-14 w-14 items-center justify-center rounded-xl bg-primary">
           <Icon className="h-7 w-7 text-primary-foreground" />
