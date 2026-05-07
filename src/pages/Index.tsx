@@ -46,7 +46,7 @@ const Index = () => {
         { name: "Registry", url: "https://research-software.dev/communities/rs4rt/software", description: "Browse open-source projects" },
         { name: "Best Practices", url: "/best-practices", description: "Guides, IPEM and Goldacre report" },
       ],
-      cta: { label: "Add an Open-Source Software", url: SUBMIT_OSS_URL },
+      cta: { label: "Add to the Registry", url: SUBMIT_OSS_URL },
     },
     {
       title: "Commercial ecosystem and vendor initiatives",
