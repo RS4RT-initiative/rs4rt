@@ -125,13 +125,13 @@ const Index = () => {
       <Navigation />
       
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-secondary/40 py-20">
+      <section className="relative overflow-hidden bg-secondary/40 pt-12 pb-10">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl text-center">
             <img
               src={rs4rtLogo}
               alt="RS4RT - Resource Sharing for Radiotherapy"
-              className="mx-auto mb-6 block h-32 w-auto md:h-44"
+              className="mx-auto mb-6 block h-48 w-auto md:h-64"
             />
             <p className="mb-8 text-lg text-muted-foreground md:text-xl">
               A comprehensive collection of open-source software, data, guidelines, and educational resources
@@ -154,9 +154,9 @@ const Index = () => {
       </section>
 
       {/* Categories Grid */}
-      <section className="py-16">
+      <section className="pt-6 pb-16">
         <div className="container mx-auto px-4">
-          <div className="mb-12 text-center">
+          <div className="mb-6 text-center">
             <h2 className="mb-4 text-3xl font-bold text-foreground">Explore Resources</h2>
             <p className="text-muted-foreground">
               Browse our curated collection of tools, data, and knowledge
