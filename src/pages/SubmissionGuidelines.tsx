@@ -526,7 +526,7 @@ const SubmissionGuidelines = () => {
           </Card>
 
           {/* 4. Final remarks */}
-          <Card className="shadow-[var(--shadow-card)]">
+          <Card id="final-remarks" className="shadow-[var(--shadow-card)]">
             <CardHeader>
               <CardTitle className="text-2xl">4. Final remarks</CardTitle>
             </CardHeader>
@@ -549,7 +549,7 @@ const SubmissionGuidelines = () => {
           </div>
 
           {/* A.1 Code types */}
-          <Card className="shadow-[var(--shadow-card)]">
+          <Card id="appendix-a1" className="shadow-[var(--shadow-card)]">
             <CardHeader>
               <CardTitle className="text-2xl">Appendix A.1 — Code types</CardTitle>
             </CardHeader>
@@ -576,7 +576,7 @@ const SubmissionGuidelines = () => {
           </Card>
 
           {/* A.2 Keywords */}
-          <Card className="shadow-[var(--shadow-card)]">
+          <Card id="appendix-a2" className="shadow-[var(--shadow-card)]">
             <CardHeader>
               <CardTitle className="text-2xl">Appendix A.2 — Keywords</CardTitle>
             </CardHeader>
@@ -603,7 +603,7 @@ const SubmissionGuidelines = () => {
           </Card>
 
           {/* A.3 README template */}
-          <Card className="shadow-[var(--shadow-card)]">
+          <Card id="appendix-a3" className="shadow-[var(--shadow-card)]">
             <CardHeader>
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <CardTitle className="flex items-center gap-2 text-2xl">
