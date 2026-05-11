@@ -8,6 +8,7 @@ import About from "./pages/About";
 import CommercialEcosystem from "./pages/CommercialEcosystem";
 import DataResources from "./pages/DataResources";
 import BestPractices from "./pages/BestPractices";
+import SubmissionGuidelines from "./pages/SubmissionGuidelines";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/commercial" element={<CommercialEcosystem />} />
           <Route path="/data-resources" element={<DataResources />} />
           <Route path="/best-practices" element={<BestPractices />} />
+          <Route path="/submission-guidelines" element={<SubmissionGuidelines />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
