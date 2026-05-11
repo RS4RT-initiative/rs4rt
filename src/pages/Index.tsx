@@ -30,7 +30,7 @@ const dataDetailItems = [
   { name: "NIH DMS Plan", description: "Writing a Data Management & Sharing plan" },
 ];
 
-const SUBMIT_OSS_URL = "https://docs.google.com/forms/d/e/1FAIpQLSfPlaceholderSubmitOSS/viewform";
+
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -44,7 +44,7 @@ const Index = () => {
         { name: "Registry", url: "https://research-software.dev/communities/rs4rt/software", description: "Browse open-source projects" },
         { name: "Best Practices", url: "/best-practices", description: "Guides, IPEM and Goldacre report" },
       ],
-      cta: { label: "Add a software to the registry", url: SUBMIT_OSS_URL },
+      cta: { label: "Add a software to the registry", url: "/submission-guidelines" },
     },
     {
       title: "Commercial ecosystem and vendor initiatives",

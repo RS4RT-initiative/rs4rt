@@ -1,9 +1,10 @@
 import { Mail, Send, Code } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/rs4rt-logo.svg";
 
 const SUBMIT_RESOURCE_URL = "https://docs.google.com/forms/d/e/1FAIpQLSfPlaceholderSubmitResource/viewform";
-const SUBMIT_OSS_URL = "https://docs.google.com/forms/d/e/1FAIpQLSfPlaceholderSubmitOSS/viewform";
+const SUBMIT_OSS_PATH = "/submission-guidelines";
 
 const Footer = () => {
   return (
@@ -52,9 +53,7 @@ const Footer = () => {
                   variant="secondary"
                   className="mt-4 w-full font-semibold"
                 >
-                  <a href={SUBMIT_OSS_URL} target="_blank" rel="noopener noreferrer">
-                    Submit a software
-                  </a>
+                  <Link to={SUBMIT_OSS_PATH}>Submit a software</Link>
                 </Button>
               </div>
             </div>

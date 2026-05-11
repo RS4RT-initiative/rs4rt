@@ -87,10 +87,17 @@ const CategoryCard = ({ title, description, icon: Icon, items, detailsPath, cta 
             className="mt-5 w-full gap-2 bg-primary text-primary-foreground hover:opacity-90 shadow-[var(--shadow-card)]"
             onClick={(e) => e.stopPropagation()}
           >
-            <a href={cta.url} target="_blank" rel="noopener noreferrer">
-              <Send className="h-4 w-4" />
-              {cta.label}
-            </a>
+            {cta.url.startsWith("/") ? (
+              <Link to={cta.url}>
+                <Send className="h-4 w-4" />
+                {cta.label}
+              </Link>
+            ) : (
+              <a href={cta.url} target="_blank" rel="noopener noreferrer">
+                <Send className="h-4 w-4" />
+                {cta.label}
+              </a>
+            )}
           </Button>
         )}
 
