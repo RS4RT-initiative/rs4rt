@@ -316,7 +316,7 @@ const SubmissionGuidelines = () => {
           </Card>
 
           {/* 2. Before You Submit */}
-          <Card className="shadow-[var(--shadow-card)]">
+          <Card id="before-you-submit" className="shadow-[var(--shadow-card)]">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-2xl">
                 <GitBranch className="h-5 w-5 text-primary" /> 2. Before You Submit
