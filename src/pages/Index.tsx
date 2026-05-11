@@ -30,7 +30,7 @@ const dataDetailItems = [
   { name: "NIH DMS Plan", description: "Writing a Data Management & Sharing plan" },
 ];
 
-const SUBMIT_OSS_URL = "https://docs.google.com/forms/d/e/1FAIpQLSfPlaceholderSubmitOSS/viewform";
+
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
