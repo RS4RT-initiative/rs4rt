@@ -262,8 +262,38 @@ const SubmissionGuidelines = () => {
 
       <div className="container mx-auto px-4 py-12">
         <div className="mx-auto max-w-5xl space-y-10">
+          {/* Table of contents */}
+          <Card className="border-primary/20 bg-secondary/30 shadow-[var(--shadow-card)]">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-xl">
+                <ListChecks className="h-5 w-5 text-primary" /> Table of contents
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <nav className="grid gap-2 sm:grid-cols-2">
+                {[
+                  { href: "#introduction", label: "1. Introduction" },
+                  { href: "#before-you-submit", label: "2. Before you submit" },
+                  { href: "#how-to-submit", label: "3. How to submit" },
+                  { href: "#final-remarks", label: "4. Final remarks" },
+                  { href: "#appendix-a1", label: "Appendix A.1 — Code types" },
+                  { href: "#appendix-a2", label: "Appendix A.2 — Keywords" },
+                  { href: "#appendix-a3", label: "Appendix A.3 — README template" },
+                ].map((item) => (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    className="rounded-md px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-primary/10 hover:text-primary"
+                  >
+                    {item.label}
+                  </a>
+                ))}
+              </nav>
+            </CardContent>
+          </Card>
+
           {/* 1. Introduction */}
-          <Card className="shadow-[var(--shadow-card)]">
+          <Card id="introduction" className="shadow-[var(--shadow-card)]">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-2xl">
                 <BookOpen className="h-5 w-5 text-primary" /> 1. Introduction
