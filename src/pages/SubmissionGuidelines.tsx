@@ -644,6 +644,7 @@ const SubmissionGuidelines = () => {
               </Button>
             </CardContent>
           </Card>
+          </div>
         </div>
       </div>
 
