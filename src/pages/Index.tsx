@@ -42,6 +42,7 @@ const Index = () => {
       icon: Code,
       items: [
         { name: "Registry", url: "https://research-software.dev/communities/rs4rt/software", description: "Browse open-source projects" },
+        { name: "Submission Guidelines", url: "/submission-guidelines", description: "How to add your software to the registry" },
         { name: "Best Practices", url: "/best-practices", description: "Guides, IPEM and Goldacre report" },
       ],
       cta: { label: "Add a software to the registry", url: "/submission-guidelines" },
