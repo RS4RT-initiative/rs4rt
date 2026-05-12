@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/rs4rt-logo.svg";
 
-const SUBMIT_RESOURCE_URL = "https://docs.google.com/forms/d/e/1FAIpQLSfPlaceholderSubmitResource/viewform";
+const SUBMIT_RESOURCE_URL = "https://forms.gle/RzmosQwNXhsPbTC58";
 const SUBMIT_OSS_PATH = "/submission-guidelines";
 
 const Footer = () => {
@@ -63,7 +63,13 @@ const Footer = () => {
 
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
-          <img src={logo} alt="RS4RT" className="h-10 w-auto" />
+          <div className="relative h-20 w-72 overflow-hidden">
+            <img
+              src={logo}
+              alt="RS4RT"
+              className="absolute left-1/2 top-1/2 h-[180%] w-auto max-w-none -translate-x-1/2 -translate-y-1/2"
+            />
+          </div>
 
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Mail className="h-4 w-4" />

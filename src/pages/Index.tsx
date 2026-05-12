@@ -43,9 +43,9 @@ const Index = () => {
       items: [
         { name: "Registry", url: "https://research-software.dev/communities/rs4rt/software", description: "Browse open-source projects" },
         { name: "Submission Guidelines", url: "/submission-guidelines", description: "How to add your software to the registry" },
-        { name: "Best Practices", url: "/best-practices", description: "Guides, IPEM and Goldacre report" },
+        { name: "Best Practices", url: "/best-practices", description: "Guidelines and references for sharing software and data responsibly" },
       ],
-      cta: { label: "Add a software to the registry", url: "/submission-guidelines" },
+      cta: { label: "Add a software to the registry", url: "https://forms.gle/x4vS5qYSBoKdrJrbA" },
     },
     {
       title: "Commercial ecosystem and vendor initiatives",
