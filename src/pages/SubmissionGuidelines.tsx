@@ -261,16 +261,14 @@ const SubmissionGuidelines = () => {
       </section>
 
       <div className="container mx-auto px-4 py-12">
-        <div className="mx-auto max-w-5xl space-y-10">
-          {/* Table of contents */}
-          <Card className="border-primary/20 bg-secondary/30 shadow-[var(--shadow-card)]">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-xl">
-                <ListChecks className="h-5 w-5 text-primary" /> Table of contents
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <nav className="grid gap-2 sm:grid-cols-2">
+        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[260px_1fr]">
+          {/* Sidebar Table of contents */}
+          <aside className="lg:sticky lg:top-24 lg:self-start">
+            <div className="rounded-lg border border-primary/20 bg-secondary/30 p-5 shadow-[var(--shadow-card)]">
+              <div className="mb-3 flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-primary">
+                <ListChecks className="h-4 w-4" /> Contents
+              </div>
+              <nav className="flex flex-col gap-1">
                 {[
                   { href: "#introduction", label: "1. Introduction" },
                   { href: "#before-you-submit", label: "2. Before you submit" },
@@ -289,9 +287,10 @@ const SubmissionGuidelines = () => {
                   </a>
                 ))}
               </nav>
-            </CardContent>
-          </Card>
+            </div>
+          </aside>
 
+          <div className="min-w-0 space-y-10">
           {/* 1. Introduction */}
           <Card id="introduction" className="shadow-[var(--shadow-card)]">
             <CardHeader>
