@@ -1,29 +1,6 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import {
-  Code,
-  ExternalLink,
-  FileText,
-  GitBranch,
-  ListChecks,
-  Send,
-  Copy,
-  Check,
-  BookOpen,
-} from "lucide-react";
-
-const SUBMIT_FORM_URL = "https://forms.gle/x4vS5qYSBoKdrJrbA";
 
 const README_TEMPLATE = `# 🩺 Project Title
 > **INCLUDE HERE Short description (max 300 characters):**
@@ -115,539 +92,362 @@ Specify the license (e.g., MIT, Apache 2.0, GPL)
 \`\`\`
 `;
 
-const codeTypes = [
-  {
-    name: "Library / Toolkit",
-    short: "Building blocks for developers — functions, algorithms, classes used to build new applications.",
-    detail:
-      "Not an executable program; no user interface. Designed to be integrated by programmers into other software (e.g., dose calculation, DICOM image handling).",
-  },
-  {
-    name: "Application",
-    short: "A complete, ready-to-use program with its own user interface (GUI or CLI).",
-    detail:
-      "Installed/run by the end-user. Includes stand-alone software, web applications, and self-contained toolboxes running within MATLAB or Python with a defined interface.",
-  },
-  {
-    name: "Script / Plugin",
-    short: "An add-on for an existing host application (commercial or open-source).",
-    detail:
-      "Examples: scripts for RayStation or Eclipse, plugins for 3D Slicer or ImageJ; a script that converts file formats, computes ROI volumes from RTSTRUCT, or extracts DICOM data.",
-  },
-];
-
-const keywordGroups: { title: string; items: string[] }[] = [
-  {
-    title: "Treatment Planning & Dosimetry",
-    items: [
-      "Dose Calculation Algorithms",
-      "Monte Carlo Simulations",
-      "Plan Optimization",
-      "Beam Modeling",
-      "Radiobiological Modeling",
-      "Plan complexity",
-      "Plan evaluation",
-    ],
-  },
-  {
-    title: "Imaging & Image Processing",
-    items: [
-      "Image Registration",
-      "Image Reconstruction",
-      "Segmentation",
-      "Synthetic CT",
-      "Motion Management",
-      "Radiomics",
-    ],
-  },
-  {
-    title: "Software Engineering & Data Infrastructure",
-    items: [
-      "DICOM-RT Tools (read/export DICOM)",
-      "PACS Integration",
-      "Interoperability",
-      "Workflow Automation",
-      "Rendering and visualization",
-    ],
-  },
-  {
-    title: "Clinical Workflow & Applications",
-    items: [
-      "Stereotactic Radiosurgery (SRS/SBRT)",
-      "Adaptive Radiation Therapy",
-      "Image-Guided Radiation Therapy (IGRT)",
-      "Intraoperative Radiation Therapy (IORT)",
-      "Automated treatment planning",
-      "Knowledge-based treatment planning",
-    ],
-  },
-  {
-    title: "Quality Assurance (QA)",
-    items: [
-      "Machine QA Tools",
-      "Patient-Specific QA",
-      "In Vivo Dosimetry",
-      "Log File Analysis",
-      "EPID/Film Dosimetry",
-      "QA Phantoms & Simulations",
-    ],
-  },
-  {
-    title: "Artificial Intelligence",
-    items: [
-      "Auto-Segmentation",
-      "Outcome prediction (toxicity, outcomes)",
-      "Radiomics",
-      "Automatic Planning",
-      "Digital Twin / Virtual Patient Modeling",
-      "Uncertainty quantification",
-    ],
-  },
-];
+const STYLES = `
+.guidelines-doc { --purple:#5b2a86; --orange:#f39b2f; --bg-main:#ffffff; --bg-soft:#f7f8fc; --bg-subtle:#fafbff; --border-soft:#e6e8f0; --text-main:#1f2937; --text-muted:#6b7280;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; line-height: 1.7; color: var(--text-main);
+  background: linear-gradient(135deg,#f5f7fa 0%,#c3cfe2 100%);
+}
+.guidelines-doc .layout { display:grid; grid-template-columns:260px 1fr; max-width:1440px; margin:auto; }
+@media (max-width: 900px){ .guidelines-doc .layout{ grid-template-columns:1fr; } }
+.guidelines-doc aside { background: linear-gradient(180deg,var(--bg-subtle) 0%,#f5f7fa 100%); border-right:1px solid var(--border-soft); padding:2rem 1.75rem; position:sticky; top:5rem; align-self:start; max-height:calc(100vh - 5rem); overflow-y:auto; box-shadow:2px 0 15px rgba(0,0,0,0.05); }
+@media (max-width: 900px){ .guidelines-doc aside{ position:static; max-height:none; } }
+.guidelines-doc aside h3 { margin:0 0 1rem; font-size:0.9rem; letter-spacing:0.04em; color:var(--text-muted); text-transform:uppercase; }
+.guidelines-doc aside ul { list-style:none; padding-left:0; margin:0; }
+.guidelines-doc aside li { margin-bottom:0.4rem; }
+.guidelines-doc aside a { text-decoration:none; color:var(--text-main); font-size:0.95rem; display:block; padding:0.35rem 0.75rem; border-radius:6px; transition:all 0.3s ease; border-left:3px solid transparent; }
+.guidelines-doc aside a:hover { background:linear-gradient(90deg,rgba(243,155,47,0.1) 0%,transparent 100%); color:var(--orange); border-left-color:var(--orange); transform:translateX(4px); }
+.guidelines-doc main { padding:3rem 4rem 6rem; background:rgba(255,255,255,0.95); border-radius:12px; margin:2rem; box-shadow:0 8px 32px rgba(0,0,0,0.08); }
+@media (max-width: 900px){ .guidelines-doc main{ padding:2rem 1.5rem 4rem; margin:1rem; } }
+.guidelines-doc section { max-width:75ch; margin-bottom:4rem; scroll-margin-top:6rem; }
+.guidelines-doc h2 { font-size:1.6rem; margin-bottom:1.2rem; color:var(--purple); position:relative;
+  background:linear-gradient(90deg,var(--purple) 0%,#8b4fab 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.guidelines-doc h2::after { content:""; position:absolute; left:0; bottom:-0.4rem; width:60px; height:3px; background:linear-gradient(90deg,var(--orange) 0%,#ffb84d 100%); border-radius:2px; }
+.guidelines-doc h3 { font-size:1.25rem; margin-top:2.5rem; color:var(--purple); }
+.guidelines-doc h4 { margin-top:1.75rem; font-size:1.05rem; color:var(--orange); }
+.guidelines-doc ul { padding-left:1.4rem; }
+.guidelines-doc ul ul { margin-top:0.4rem; }
+.guidelines-doc a { color: var(--purple); }
+.guidelines-doc .section-focus { background:linear-gradient(135deg,rgba(243,155,47,0.05) 0%,rgba(91,42,134,0.03) 100%); border-left:4px solid var(--orange); padding:1.5rem 1.75rem; border-radius:6px; margin:2rem 0; box-shadow:0 4px 12px rgba(243,155,47,0.1); }
+.guidelines-doc pre { background:linear-gradient(135deg,#1a1f3a 0%,#0f172a 100%); color:#e5e7eb; padding:1.75rem; border-radius:10px; font-size:0.9rem; line-height:1.55; overflow-x:auto; box-shadow:0 8px 24px rgba(0,0,0,0.2); border:1px solid rgba(229,231,235,0.1); user-select:text; white-space:pre; }
+.guidelines-doc table { width:100%; border-collapse:collapse; margin-top:1rem; }
+.guidelines-doc th, .guidelines-doc td { border:1px solid var(--border-soft); padding:0.75rem 1rem; text-align:left; vertical-align:top; font-size:0.95rem; }
+.guidelines-doc th { background:rgba(91,42,134,0.06); color:var(--purple); }
+.guidelines-doc .template-tools { display:flex; align-items:center; gap:0.8rem; margin:0.4rem 0 1rem; }
+.guidelines-doc .copy-template-btn { border:1px solid rgba(91,42,134,0.25); background:linear-gradient(180deg,#ffffff 0%,#f6f2fb 100%); color:var(--purple); font-size:0.9rem; font-weight:600; border-radius:8px; padding:0.5rem 0.9rem; cursor:pointer; transition:all 0.2s ease; }
+.guidelines-doc .copy-template-btn:hover { border-color:rgba(91,42,134,0.55); transform:translateY(-1px); box-shadow:0 4px 10px rgba(91,42,134,0.14); }
+.guidelines-doc .copy-template-status { font-size:0.88rem; color:var(--text-muted); min-height:1.2rem; }
+.guidelines-doc .appendix-divider { margin:4.5rem 0 2.5rem; display:flex; align-items:center; gap:1rem; color:var(--purple); }
+.guidelines-doc .appendix-divider::before, .guidelines-doc .appendix-divider::after { content:""; flex:1; height:1px; background:linear-gradient(90deg,transparent 0%,rgba(91,42,134,0.45) 50%,transparent 100%); }
+.guidelines-doc .appendix-divider span { font-size:0.82rem; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; padding:0.35rem 0.8rem; border-radius:999px; border:1px solid rgba(91,42,134,0.2); background:rgba(91,42,134,0.06); }
+.guidelines-doc .appendix-section { background:linear-gradient(180deg,rgba(247,248,252,0.8) 0%,rgba(255,255,255,0.95) 100%); border:1px solid rgba(91,42,134,0.12); border-radius:12px; padding:1.75rem 2rem; }
+.guidelines-doc .appendix-section + .appendix-section { margin-top:2rem; }
+`;
 
 const SubmissionGuidelines = () => {
-  const [copied, setCopied] = useState(false);
+  const [status, setStatus] = useState("");
+  const preRef = useRef<HTMLPreElement>(null);
 
-  const handleCopy = async () => {
+  const copyTemplate = async () => {
     try {
       await navigator.clipboard.writeText(README_TEMPLATE);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2500);
+      setStatus("Template copied to clipboard.");
     } catch {
-      /* ignore */
+      setStatus("Copy failed. Select the template text and copy manually.");
     }
   };
+
+  useEffect(() => {
+    if (!status) return;
+    const t = setTimeout(() => setStatus(""), 3500);
+    return () => clearTimeout(t);
+  }, [status]);
 
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-
-      {/* Hero */}
-      <section className="border-b border-border bg-secondary/40">
-        <div className="container mx-auto px-4 py-12">
-          <div className="mx-auto max-w-5xl">
-            <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-xl bg-primary">
-              <Code className="h-8 w-8 text-primary-foreground" />
-            </div>
-            <h1 className="mb-4 text-4xl font-bold text-foreground md:text-5xl">
-              Open-Source Software Registry — Submission Guidelines
-            </h1>
-            <p className="text-lg text-muted-foreground">
-              How to submit your software to the RS4RT registry, hosted in the{" "}
-              <a
-                href="https://research-software-directory.org/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary underline-offset-4 hover:underline"
-              >
-                Research Software Directory (RSD)
-              </a>
-              .
-            </p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <Button asChild size="lg" className="font-semibold">
-                <a href={SUBMIT_FORM_URL} target="_blank" rel="noopener noreferrer">
-                  <Send className="mr-2 h-4 w-4" /> Open submission form
-                </a>
-              </Button>
-              <Button asChild size="lg" variant="outline">
-                <a href="#how-to-submit">
-                  <ListChecks className="mr-2 h-4 w-4" /> See required info
-                </a>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <div className="container mx-auto px-4 py-12">
-        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[260px_1fr]">
-          {/* Sidebar Table of contents */}
-          <aside className="lg:sticky lg:top-24 lg:self-start">
-            <div className="rounded-lg border border-primary/20 bg-secondary/30 p-5 shadow-[var(--shadow-card)]">
-              <div className="mb-3 flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-primary">
-                <ListChecks className="h-4 w-4" /> Contents
-              </div>
-              <nav className="flex flex-col gap-1">
-                {[
-                  { href: "#introduction", label: "1. Introduction" },
-                  { href: "#before-you-submit", label: "2. Before you submit" },
-                  { href: "#how-to-submit", label: "3. How to submit" },
-                  { href: "#final-remarks", label: "4. Final remarks" },
-                  { href: "#appendix-a1", label: "Appendix A.1 — Code types" },
-                  { href: "#appendix-a2", label: "Appendix A.2 — Keywords" },
-                  { href: "#appendix-a3", label: "Appendix A.3 — README template" },
-                ].map((item) => (
-                  <a
-                    key={item.href}
-                    href={item.href}
-                    className="rounded-md px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-primary/10 hover:text-primary"
-                  >
-                    {item.label}
-                  </a>
-                ))}
-              </nav>
-            </div>
+      <style>{STYLES}</style>
+      <div className="guidelines-doc">
+        <div className="layout">
+          <aside>
+            <h3>Contents</h3>
+            <ul>
+              <li><a href="#section-1">1. Introduction</a></li>
+              <li><a href="#section-2">2. Before You Submit</a></li>
+              <li><a href="#section-3">3. How to Submit</a></li>
+              <li><a href="#section-4">4. Final remarks</a></li>
+              <h3>Appendices</h3>
+              <li><a href="#appendix-a1">A.1 – Code types</a></li>
+              <li><a href="#appendix-a2">A.2 – Keywords</a></li>
+              <li><a href="#appendix-a3">A.3 – README template</a></li>
+            </ul>
           </aside>
 
-          <div className="min-w-0 space-y-10">
-          {/* 1. Introduction */}
-          <Card id="introduction" className="shadow-[var(--shadow-card)]">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-2xl">
-                <BookOpen className="h-5 w-5 text-primary" /> 1. Introduction
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4 text-muted-foreground">
+          <main>
+            <section id="section-1">
+              <h2>1. Introduction</h2>
               <p>
-                The RS4RT registry is intended as a comprehensive collection of open-source software for the
-                radiation therapy community.
+                The RS4RT registry is intended as a comprehensive collection of open-source
+                software for the radiation therapy community.
               </p>
               <p>
-                RS4RT is hosted as a community in the Research Software Directory (RSD), a free online platform
-                that showcases the impact of research software on research and society.
+                RS4RT is hosted as a community in the{" "}
+                <a href="https://research-software-directory.org/" target="_blank" rel="noopener noreferrer">
+                  Research Software Directory (RSD)
+                </a>
+                , a free online platform that showcases the impact of research software on research and society.
               </p>
               <p>
-                Please follow the guidelines below to ensure a smooth submission process. They also serve as good
-                practice for standardizing software and making it more accessible to the radiotherapy community.
+                Please follow the guidelines below to ensure a smooth submission process.
+                These guidelines also serve as good practice for standardizing the software
+                and making it more accessible to the radiotherapy community.
               </p>
-            </CardContent>
-          </Card>
+            </section>
 
-          {/* 2. Before You Submit */}
-          <Card id="before-you-submit" className="shadow-[var(--shadow-card)]">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-2xl">
-                <GitBranch className="h-5 w-5 text-primary" /> 2. Before You Submit
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6 text-muted-foreground">
+            <section id="section-2">
+              <h2>2. Before You Submit</h2>
               <p>
-                RSD will harvest and update information automatically if your software is hosted on a Git
-                repository and has a{" "}
-                <a
-                  href="https://research-software.dev/documentation/users/adding-software/#software-doi"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-primary underline-offset-4 hover:underline"
-                >
+                RSD will harvest and update all information automatically if your software
+                is hosted on a Git repository and it has a{" "}
+                <a href="https://research-software.dev/documentation/users/adding-software/#software-doi" target="_blank" rel="noopener noreferrer">
                   software DOI
                 </a>
-                . Neither is compulsory, but both are highly recommended:
+                . Neither of them is compulsory, but they are highly recommended:
               </p>
-              <ul className="ml-5 list-disc space-y-1">
-                <li>
-                  <span className="font-semibold text-foreground">Git repository:</span> automatic update of
-                  licence, programming language, description, and commit history.
-                </li>
-                <li>
-                  <span className="font-semibold text-foreground">Software DOI:</span> automatic update of
-                  versioning and contributors.
-                </li>
+              <ul>
+                <li><strong>Git repository</strong>: automatic update of licence, programming language, description, and commit history.</li>
+                <li><strong>Software DOI</strong>: automatic update of the versioning and contributors.</li>
               </ul>
 
-              <div>
-                <h3 className="mb-2 text-lg font-semibold text-foreground">2.1 Git repository available</h3>
-                <p className="mb-3">
-                  <span className="font-semibold text-foreground">Repository setup:</span> the project must be
-                  hosted on a public platform (GitHub, GitLab, or Bitbucket) and publicly accessible. If not
-                  possible, at least an executable must be available.
-                </p>
-                <p className="font-semibold text-foreground">Required files and content</p>
-                <ul className="ml-5 mt-2 list-disc space-y-2">
-                  <li>
-                    <span className="font-semibold text-foreground">License:</span> include a recognized
-                    open-source license (
-                    <a
-                      href="https://spdx.org/licenses/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-primary underline-offset-4 hover:underline"
-                    >
-                      SPDX list
-                    </a>
-                    ) in the root directory.
-                  </li>
-                  <li>
-                    <span className="font-semibold text-foreground">README:</span> project title, short
-                    description, installation, getting started, usage examples, optional extended user-guide
-                    link, contribution guidelines, and a contact person. Use the README template below.
-                  </li>
-                  <li>
-                    <span className="font-semibold text-foreground">Versioning:</span> use a clear versioning
-                    scheme.
-                  </li>
-                  <li>
-                    <span className="font-semibold text-foreground">Project description:</span> a concise
-                    summary of what the software does, the problem it solves, and its target audience.
-                  </li>
-                </ul>
-              </div>
+              <h3>2.1 Git repository available</h3>
 
-              <div>
-                <h3 className="mb-2 text-lg font-semibold text-foreground">2.2 Git repository not available</h3>
-                <p>
-                  Use the <span className="font-semibold text-foreground">custom software description</span> in
-                  the form to link to an external page where the software can be downloaded.{" "}
-                  <a
-                    href="https://primoproject.net/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary underline-offset-4 hover:underline"
-                  >
-                    PRIMO
-                  </a>{" "}
-                  is an example. Include in this description any information not retrievable from a Git
-                  repository (versioning, contributors, detailed documentation).
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* 3. How to Submit */}
-          <Card id="how-to-submit" className="shadow-[var(--shadow-card)]">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-2xl">
-                <ListChecks className="h-5 w-5 text-primary" /> 3. How to Submit
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6 text-muted-foreground">
+              <h4>Git Repository Setup</h4>
               <p>
-                Fill out the{" "}
-                <a
-                  href={SUBMIT_FORM_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-semibold text-primary underline-offset-4 hover:underline"
-                >
-                  submission Google Form
-                </a>{" "}
-                with the information below. It is used to create the software entry in RSD and make it
-                discoverable. More info in the{" "}
-                <a
-                  href="https://research-software-directory.org/documentation/users/adding-software/#software-entry"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-primary underline-offset-4 hover:underline"
-                >
-                  RSD documentation
-                </a>
-                .
+                Your project must be hosted on a public platform (GitHub, GitLab, or Bitbucket).
+                The repository should be publicly accessible without restrictions.
+                If this is not possible, at least an executable must be available.
               </p>
 
-              <div className="rounded-lg border-l-4 border-primary bg-secondary/30 p-5">
-                <p className="font-semibold text-foreground">Common fields</p>
-                <ul className="ml-5 mt-2 list-disc space-y-1">
-                  <li><span className="font-semibold text-foreground">Software name</span></li>
-                  <li><span className="font-semibold text-foreground">Short description</span> (max 300 characters)</li>
-                  <li>
-                    <span className="font-semibold text-foreground">Code type</span> — Application, Library /
-                    Toolkit, or Script / Plugin (see Appendix A.1)
-                  </li>
-                  <li>
-                    <span className="font-semibold text-foreground">Keywords</span> (max 3, see Appendix A.2)
-                  </li>
-                  <li>
-                    <span className="font-semibold text-foreground">Field</span> — Protons / Ions, Photons,
-                    Brachytherapy, or Multiple purpose
-                  </li>
-                  <li>
-                    <span className="font-semibold text-foreground">License</span> (SPDX, "Other", or "None")
-                  </li>
-                </ul>
+              <h4>Required Files and Content</h4>
 
-                <p className="mt-5 font-semibold text-foreground">
-                  If the software is on GitHub / GitLab / Bitbucket
-                </p>
-                <ul className="ml-5 mt-2 list-disc space-y-1">
-                  <li>
-                    <span className="font-semibold text-foreground">Source code link:</span> repository URL.
-                  </li>
-                  <li>
-                    <span className="font-semibold text-foreground">Raw README URL:</span> link to the raw
-                    README file (on GitHub, click "Raw" then copy the URL). Used as the software description in
-                    RSD.
-                  </li>
-                </ul>
-
-                <p className="mt-5 font-semibold text-foreground">If the software is NOT on a Git platform</p>
-                <ul className="ml-5 mt-2 list-disc space-y-1">
-                  <li>
-                    <span className="font-semibold text-foreground">Custom description</span> (max 10,000
-                    characters): include all information that cannot be retrieved from a Git repository
-                    (versioning, contributors, contact, documentation, programming language). The README
-                    template below can be reused.
-                  </li>
-                  <li>
-                    <span className="font-semibold text-foreground">Programming language</span> — internal use
-                    only; include in custom description if relevant.
-                  </li>
-                  <li>
-                    <span className="font-semibold text-foreground">Latest commit</span> — internal use only;
-                    include in custom description if relevant.
-                  </li>
-                </ul>
-
-                <p className="mt-5 font-semibold text-foreground">Optional information</p>
-                <ul className="ml-5 mt-2 list-disc space-y-1">
-                  <li>
-                    <span className="font-semibold text-foreground">Websites</span> — internal use only.
-                  </li>
-                  <li>
-                    <span className="font-semibold text-foreground">Software DOI</span> — e.g. via Zenodo.
-                  </li>
-                  <li>
-                    <span className="font-semibold text-foreground">Reference paper</span> — DOI of a paper
-                    primarily describing the software.
-                  </li>
-                  <li>
-                    <span className="font-semibold text-foreground">Related output</span> — DOI(s) of related
-                    papers (comma-separated).
-                  </li>
-                  <li>
-                    <span className="font-semibold text-foreground">Contact person / ORCID</span> — name or
-                    ORCID; otherwise add to custom description.
-                  </li>
-                  <li>
-                    <span className="font-semibold text-foreground">Logo</span> — raw URL to a logo image.
-                  </li>
-                </ul>
-              </div>
-
-              <div className="flex flex-wrap gap-3 pt-2">
-                <Button asChild size="lg" className="font-semibold">
-                  <a href={SUBMIT_FORM_URL} target="_blank" rel="noopener noreferrer">
-                    <Send className="mr-2 h-4 w-4" /> Open submission form
-                  </a>
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* 4. Final remarks */}
-          <Card id="final-remarks" className="shadow-[var(--shadow-card)]">
-            <CardHeader>
-              <CardTitle className="text-2xl">4. Final remarks</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3 text-muted-foreground">
+              <p><strong>License</strong></p>
               <p>
-                The submission form is used for the first submission. If the software is correctly stored on a
-                public Git repository, RSD will update the information automatically.
+                Include a recognized open source license (
+                <a href="https://spdx.org/licenses/" target="_blank" rel="noopener noreferrer">SPDX list</a>
+                ). The license file must be present in the root directory.
+              </p>
+
+              <p><strong>README</strong></p>
+              <ul>
+                <li>Project title and short description</li>
+                <li>Installation instructions</li>
+                <li>Getting started and usage examples</li>
+                <li>Link to extended user guide (if available)</li>
+                <li>Contribution guidelines (optional)</li>
+                <li>Contact person (name, email, institution)</li>
+              </ul>
+
+              <p>
+                You can fill in the attached template, which will be displayed in the software
+                description in RSD (<a href="#appendix-a3">Appendix A.3</a>).
+              </p>
+
+              <p><strong>Versioning</strong><br />Use a clear versioning scheme.</p>
+
+              <p><strong>Project Description</strong><br />Provide a concise summary of what your software does, the problem it solves, and its target audience.</p>
+
+              <h3>2.2 Git repository not available</h3>
+              <p>
+                If the Git repository is unavailable, please use the <strong>custom software description</strong> (see <a href="#section-3">Section 3</a>) to link to an external webpage where the software can be downloaded.{" "}
+                <a href="https://primoproject.net/" target="_blank" rel="noopener noreferrer">PRIMO</a> is an example of software not available on GitHub. A comprehensive webpage with the software description and documentation is provided.
+              </p>
+              <p>
+                The custom software description can be used to include all the information not accessible through the Git repository (e.g. versioning, contributors, detailed documentation).
+              </p>
+            </section>
+
+            <section id="section-3">
+              <h2>3. How to Submit</h2>
+              <p><strong>Fill out the <a href="https://forms.gle/x4vS5qYSBoKdrJrbA" target="_blank" rel="noopener noreferrer">Google Form</a> with the following information.</strong></p>
+              <p>
+                The information required for the submission is listed below. This information is used to create the software entry in RSD and to make it discoverable by the community. If you want to know more about the software entry in RSD, please visit the{" "}
+                <a href="https://research-software-directory.org/documentation/users/adding-software/#software-entry" target="_blank" rel="noopener noreferrer">RSD documentation</a>.
+              </p>
+
+              <div className="section-focus">
+                <ul>
+                  <li><strong>Software Name</strong></li>
+                  <li><strong>Short description</strong> (max 300 characters)</li>
+                  <li>
+                    <strong>Code Type</strong> (see <em><a href="#appendix-a1">Appendix A.1</a></em>)
+                    <ul>
+                      <li>Application</li>
+                      <li>Library / Toolkit</li>
+                      <li>Script / Plugin</li>
+                    </ul>
+                  </li>
+                  <li><strong>Keywords</strong> (max 3, see <em><a href="#appendix-a2">Appendix A.2</a></em>)</li>
+                  <li>
+                    <strong>Field</strong>
+                    <ul>
+                      <li>Protons / Ions</li>
+                      <li>Photons</li>
+                      <li>Brachytherapy</li>
+                      <li>Multiple purpose</li>
+                    </ul>
+                  </li>
+                  <li><strong>License</strong> (SPDX, "Other", or "None")</li>
+                </ul>
+
+                <h4>If the software is stored on GitHub/GitLab/Bitbucket</h4>
+                <ul>
+                  <li><strong>Source Code link:</strong> GitHub/GitLab/Bitbucket URL</li>
+                  <li>
+                    <strong>Raw README URL:</strong>
+                    <ul>
+                      <li>You need to link to the <strong>raw</strong> version of the readme file. For example on GitHub, you can click on the "Raw" button when viewing the README file. Then copy the URL from the browser's address bar.</li>
+                      <li>It is used as software description. See the template in <a href="#appendix-a3">Appendix A.3</a> for reference.</li>
+                    </ul>
+                  </li>
+                </ul>
+
+                <h4>If the software is NOT stored on GitHub/GitLab/Bitbucket</h4>
+                <ul>
+                  <li>
+                    <strong>Custom description</strong> (max 10000 characters)
+                    <ul>
+                      <li>If you don't have a GitHub/GitLab/Bitbucket repository, you can provide a custom description of your software.</li>
+                      <li>You can make a Markdown file with the description and then copy its content in the form.</li>
+                      <li>It is used as software description, therefore include all the relevant information of your software that cannot be retrieved from a Git repository (e.g., versioning, contributors, contact information, detailed documentation, programming language). See the template in <a href="#appendix-a3">Appendix A.3</a> for reference.</li>
+                    </ul>
+                  </li>
+                  <li><strong>Programming Language:</strong> This information will not be displayed in RSD. It is used for internal purposes only. Include it in the custom description if relevant.</li>
+                  <li><strong>Latest Commit:</strong> This information will not be displayed in RSD. It is used for internal purposes only. Include it in the custom description if relevant.</li>
+                </ul>
+
+                <h4><strong>Optional information</strong></h4>
+                <ul>
+                  <li><strong>Websites:</strong> This information will not be displayed in RSD. It is used for internal purposes only. Include it in the custom description if relevant.</li>
+                  <li><strong>Software DOI:</strong> Software DOI obtained via Zenodo or other DOI providers. More information on the software DOI can be found <a href="https://research-software.dev/documentation/users/adding-software/#software-doi" target="_blank" rel="noopener noreferrer">here</a>.</li>
+                  <li><strong>Reference paper:</strong> DOI of an article or artifact that primarily describes your software.</li>
+                  <li><strong>Related output:</strong> DOI(s) of related papers to the software. If more than one, separate them with commas.</li>
+                  <li><strong>Contact person / ORCID:</strong> RSD has access to the ORCID database. Write the name or the ORCID of the contact person. If the contact person does not have an ORCID, write the contact information in the custom description.</li>
+                  <li><strong>Logo:</strong> Upload a logo image for your software as raw URL. This will be displayed in RSD. See the GEANT4 URL as an example: <a href="https://geant4.web.cern.ch/assets/logo/g4logo-web.png" target="_blank" rel="noopener noreferrer">https://geant4.web.cern.ch/assets/logo/g4logo-web.png</a></li>
+                </ul>
+              </div>
+            </section>
+
+            <section id="section-4">
+              <h2>4. Final remarks</h2>
+              <p>
+                The submission form is used for the first submission.
+                If the software is correctly stored on a public Git repository, RSD
+                will update the information automatically.
               </p>
               <p>Submissions that do not meet the minimum requirements may be rejected.</p>
-            </CardContent>
-          </Card>
+            </section>
 
-          {/* Appendices divider */}
-          <div className="flex items-center gap-3 pt-4">
-            <div className="h-px flex-1 bg-border" />
-            <span className="rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-bold uppercase tracking-widest text-primary">
-              Appendices
-            </span>
-            <div className="h-px flex-1 bg-border" />
-          </div>
+            <div className="appendix-divider" id="appendices" aria-label="Appendices divider">
+              <span>Appendices</span>
+            </div>
 
-          {/* A.1 Code types */}
-          <Card id="appendix-a1" className="shadow-[var(--shadow-card)]">
-            <CardHeader>
-              <CardTitle className="text-2xl">Appendix A.1 — Code types</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="w-[180px]">Code type</TableHead>
-                    <TableHead>Short description</TableHead>
-                    <TableHead>Detailed description</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {codeTypes.map((c) => (
-                    <TableRow key={c.name}>
-                      <TableCell className="font-semibold text-foreground">{c.name}</TableCell>
-                      <TableCell className="text-muted-foreground">{c.short}</TableCell>
-                      <TableCell className="text-muted-foreground">{c.detail}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
+            <section id="appendix-a1" className="appendix-section">
+              <h2>Appendix A.1 – Code type description</h2>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Code Type</th>
+                    <th>Short Description</th>
+                    <th>Detailed Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Library / Toolkit</strong></td>
+                    <td>Building blocks for developers. A set of software components (functions, algorithms, classes) used to build new applications.</td>
+                    <td>This is not an executable program and does not have its own user interface. It is designed to be integrated by programmers into other software to add specific functionalities (e.g., dose calculation, DICOM image handling, etc.).</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Application</strong></td>
+                    <td>A complete, ready-to-use program. A self-contained program with its own user interface (GUI or command-line) to perform specific tasks. Although labelled ready-to-use, it is expected that all software should be tested and validated by the user prior to use.</td>
+                    <td>It can be installed and/or run directly by the end-user. This category includes: Stand-alone software, Web applications (accessed via a browser), self-contained toolboxes that run within an environment like MATLAB or Python but have their own defined interface (either GUI or command-line).</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Script / Plugin</strong></td>
+                    <td>An add-on for other software. A component that adds functionality to an existing host application (either commercial or open-source).</td>
+                    <td>It can be either a plug-in software depending on other applications or it can run on its own but it is designed for a specific task. Examples: scripts for RayStation or Eclipse, plugins for 3D Slicer or ImageJ; a script that converts file formats, calculates an ROI volume from an RTSTRUCT file, or extracts specific data from a DICOM file.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
 
-          {/* A.2 Keywords */}
-          <Card id="appendix-a2" className="shadow-[var(--shadow-card)]">
-            <CardHeader>
-              <CardTitle className="text-2xl">Appendix A.2 — Keywords</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="mb-6 text-muted-foreground">
-                Below each keyword category is a list of sub-categories appropriate for the given keyword.
-              </p>
-              <div className="grid gap-6 md:grid-cols-2">
-                {keywordGroups.map((g) => (
-                  <div
-                    key={g.title}
-                    className="rounded-lg border border-border bg-secondary/20 p-5"
-                  >
-                    <h3 className="mb-3 text-lg font-semibold text-foreground">{g.title}</h3>
-                    <ul className="ml-5 list-disc space-y-1 text-sm text-muted-foreground">
-                      {g.items.map((it) => (
-                        <li key={it}>{it}</li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
+            <section id="appendix-a2" className="appendix-section">
+              <h2>Appendix A.2 – Keywords description</h2>
+              <p>Below each keyword category is an exhaustive list of sub-categories that would be appropriate for the given keyword.</p>
+
+              <h3>Treatment Planning &amp; Dosimetry</h3>
+              <ul>
+                <li>Dose Calculation Algorithms</li>
+                <li>Monte Carlo Simulations</li>
+                <li>Plan Optimization</li>
+                <li>Beam Modeling</li>
+                <li>Radiobiological Modeling</li>
+                <li>Plan complexity</li>
+                <li>Plan evaluation</li>
+              </ul>
+
+              <h3>Imaging &amp; Image Processing</h3>
+              <ul>
+                <li>Image Registration</li>
+                <li>Image Reconstruction</li>
+                <li>Segmentation</li>
+                <li>Synthetic CT</li>
+                <li>Motion Management</li>
+                <li>Radiomics</li>
+              </ul>
+
+              <h3>Software Engineering &amp; Data Infrastructure</h3>
+              <ul>
+                <li>DICOM-RT Tools (read/export dicom)</li>
+                <li>PACS Integration</li>
+                <li>Interoperability</li>
+                <li>Workflow Automation</li>
+                <li>Rendering and visualization</li>
+              </ul>
+
+              <h3>Clinical workflow and applications</h3>
+              <ul>
+                <li>Stereotactic Radiosurgery (SRS/SBRT)</li>
+                <li>Adaptive Radiation Therapy</li>
+                <li>Image-Guided Radiation Therapy (IGRT)</li>
+                <li>Intraoperative Radiation Therapy (IORT)</li>
+                <li>Automated treatment planning</li>
+                <li>Knowledge-based treatment planning</li>
+              </ul>
+
+              <h3>Quality Assurance (QA)</h3>
+              <ul>
+                <li>Machine QA Tools</li>
+                <li>Patient-Specific QA</li>
+                <li>In Vivo Dosimetry</li>
+                <li>Log File Analysis</li>
+                <li>EPID/Film Dosimetry</li>
+                <li>QA Phantoms &amp; Simulations</li>
+              </ul>
+
+              <h3>Artificial Intelligence</h3>
+              <ul>
+                <li>Auto-Segmentation</li>
+                <li>Outcome prediction (toxicity, outcomes)</li>
+                <li>Radiomics</li>
+                <li>Automatic Planning</li>
+                <li>Digital Twin / Virtual Patient Modeling</li>
+                <li>Uncertainty quantification</li>
+              </ul>
+            </section>
+
+            <section id="appendix-a3" className="appendix-section">
+              <h2>Appendix A.3 – README markdown template</h2>
+              <div className="template-tools">
+                <button type="button" className="copy-template-btn" onClick={copyTemplate}>
+                  Copy README template
+                </button>
+                <span className="copy-template-status" aria-live="polite">{status}</span>
               </div>
-            </CardContent>
-          </Card>
-
-          {/* A.3 README template */}
-          <Card id="appendix-a3" className="shadow-[var(--shadow-card)]">
-            <CardHeader>
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <CardTitle className="flex items-center gap-2 text-2xl">
-                  <FileText className="h-5 w-5 text-primary" /> Appendix A.3 — README template
-                </CardTitle>
-                <Button onClick={handleCopy} variant="outline" size="sm">
-                  {copied ? (
-                    <>
-                      <Check className="mr-2 h-4 w-4" /> Copied
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="mr-2 h-4 w-4" /> Copy template
-                    </>
-                  )}
-                </Button>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <pre className="max-h-[500px] overflow-auto rounded-lg bg-foreground p-5 text-xs leading-relaxed text-background">
-                <code>{README_TEMPLATE}</code>
-              </pre>
-            </CardContent>
-          </Card>
-
-          {/* Final CTA */}
-          <Card className="border-primary/30 bg-primary text-primary-foreground shadow-[var(--shadow-card)]">
-            <CardContent className="flex flex-col items-center gap-4 p-8 text-center md:flex-row md:justify-between md:text-left">
-              <div>
-                <h3 className="text-xl font-bold md:text-2xl">Ready to add your software?</h3>
-                <p className="mt-1 text-primary-foreground/80">
-                  Submit your project to the RS4RT open-source registry.
-                </p>
-              </div>
-              <Button asChild size="lg" variant="secondary" className="font-semibold">
-                <a href={SUBMIT_FORM_URL} target="_blank" rel="noopener noreferrer">
-                  <ExternalLink className="mr-2 h-4 w-4" /> Open submission form
-                </a>
-              </Button>
-            </CardContent>
-          </Card>
-          </div>
+              <pre ref={preRef} tabIndex={0}>{README_TEMPLATE}</pre>
+            </section>
+          </main>
         </div>
       </div>
-
       <Footer />
     </div>
   );
