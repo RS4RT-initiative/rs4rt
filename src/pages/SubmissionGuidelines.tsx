@@ -155,6 +155,24 @@ const SubmissionGuidelines = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
+      <section className="bg-gradient-to-br from-primary/10 via-background to-accent/10 border-b border-border">
+        <div className="max-w-5xl mx-auto px-6 py-16 text-center">
+          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+            Submission Guidelines
+          </h1>
+          <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
+            How to add your open-source software to the RS4RT registry
+          </p>
+          <a
+            href="https://forms.gle/RzmosQwNXhsPbTC58"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-2 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8 text-sm font-medium transition-colors"
+          >
+            Go to submission form
+          </a>
+        </div>
+      </section>
       <style>{STYLES}</style>
       <div className="guidelines-doc">
         <div className="layout">
