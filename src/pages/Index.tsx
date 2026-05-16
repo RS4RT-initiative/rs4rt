@@ -41,7 +41,7 @@ const Index = () => {
       description: "Community-driven software solutions for radiation therapy",
       icon: Code,
       items: [
-        { name: "Registry", url: "https://research-software.dev/communities/rs4rt/software", description: "Browse open-source projects" },
+        { name: "Registry", url: "https://research-software-directory.org/communities/rs4rt/software", description: "Browse open-source projects" },
         { name: "Submission Guidelines", url: "/submission-guidelines", description: "How to add your software to the registry" },
         { name: "Best Practices", url: "/best-practices", description: "Guidelines and references for sharing software and data responsibly" },
       ],
